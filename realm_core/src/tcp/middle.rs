@@ -33,6 +33,19 @@ pub async fn connect_and_relay(
         ..
     } = conn_opts.as_ref();
 
+    
+    // filter no-tls
+    {
+        if conn_opts.transport.is_none() {
+            let mut buf = [0u8; 4];
+            while local.peek(&mut buf).await? < 3 {};
+            if (buf[0] != 0x16 || buf[1] != 0x03 || buf[2] != 0x01) {
+                log::debug!("[tcp]no-tls, filterd");
+                return Ok(());
+            }
+        }
+    }
+
     // before connect
     // ..
     let raddr = {

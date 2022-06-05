@@ -125,4 +125,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          prerelease: true
           files: release-${{ matrix.target }}/*
