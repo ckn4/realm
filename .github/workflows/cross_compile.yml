@@ -1,5 +1,11 @@
 name: build
 on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag of image'
+        required: false
+        default: 'test'
   push:
     branches: [ master ]
   pull_request:
